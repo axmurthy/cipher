@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cipher
 
-## Getting Started
+A daily puzzle for curious people. One term a day from AI, tech, healthcare,
+startups, science and research — guess it from a clue, then find out why it
+matters.
 
-First, run the development server:
+The guessing is the hook. The point is the explanation and the source link you
+get at the end, win or lose.
+
+## How it works
+
+- One puzzle per day, the same for everyone, rotating at midnight UTC
+- A clue, the answer length, and six or seven tries
+- Green means right letter and right place, amber means right letter elsewhere
+- Progress and stats persist locally in the browser
+
+## Running it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Adding puzzles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Every puzzle lives in `lib/puzzles.ts` as a single typed entry:
 
-## Learn More
+```ts
+{
+  id: 61,
+  answer: "TRANSFORMER",     // uppercase, single word, 4–9 letters
+  clue: "...",               // one sentence, no giveaway
+  topic: "AI",
+  explanation: "...",        // 2–3 sentences on why it matters
+  sourceUrl: "https://...",
+  sourceLabel: "...",
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+The daily puzzle is `puzzleNumber % PUZZLES.length`, so adding entries changes
+which puzzle falls on which day. The bank currently holds 60.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploying
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Push to GitHub and import the repo on Vercel. No environment variables, no
+database — it builds and runs as-is.
 
-## Deploy on Vercel
+## Layout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/page.tsx        resolves the daily puzzle server-side
+components/Game.tsx game state, keyboard handling, persistence
+lib/game.ts         guess evaluation, daily rotation, share text
+lib/puzzles.ts      the puzzle bank
+lib/stats.ts        localStorage stats and saved games
+```
