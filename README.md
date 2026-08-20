@@ -30,9 +30,9 @@ Every puzzle lives in `lib/puzzles.ts` as a single typed entry:
 ```ts
 {
   id: 61,
-  answer: "TRANSFORMER",     // uppercase, single word, 4–9 letters
+  answer: "RECURSION",       // uppercase, single word, 4–9 letters
   clue: "...",               // one sentence, no giveaway
-  topic: "AI",
+  topic: "Tech",
   explanation: "...",        // 2–3 sentences on why it matters
   sourceUrl: "https://...",
   sourceLabel: "...",

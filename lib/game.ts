@@ -48,7 +48,7 @@ export function keyboardStates(
   return states;
 }
 
-const EPOCH = Date.UTC(2026, 0, 1);
+const EPOCH = Date.UTC(2026, 7, 19);
 const DAY_MS = 86_400_000;
 
 export function puzzleNumberFor(date: Date): number {
@@ -57,7 +57,7 @@ export function puzzleNumberFor(date: Date): number {
     date.getUTCMonth(),
     date.getUTCDate(),
   );
-  return Math.floor((today - EPOCH) / DAY_MS);
+  return Math.floor((today - EPOCH) / DAY_MS) + 1;
 }
 
 export function dailyPuzzle(date: Date): { puzzle: Puzzle; number: number } {
